@@ -10,9 +10,11 @@ RUN npm ci --only=production
 FROM node:22-alpine AS runtime
 WORKDIR /app
 
-# Create non-root user/group
+# Create non-root user/group; upgrade npm to fix bundled CVEs (tar, brace-expansion)
 RUN addgroup -g 1001 -S appgroup && \
-    adduser -u 1001 -S appuser -G appgroup
+    adduser -u 1001 -S appuser -G appgroup && \
+    npm install -g npm@latest && \
+    npm cache clean --force
 
 # Copy production deps and source
 COPY --from=deps /app/node_modules ./node_modules
