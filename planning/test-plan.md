@@ -108,7 +108,18 @@
 | T-011 | TC-001, TC-002, TC-003, TC-004, TC-005, TC-006, TC-007, TC-008, TC-009, TC-SEC-006 |
 | T-020 | TC-001 through TC-012, TC-SEC-006 |
 | T-021 | TC-SEC-002 |
+| **T-040** | **TC-VER-001, TC-VER-002, TC-VER-003** |
 | T-REL-002 | TC-SEC-004 (container scan on release image) |
+
+### Version Endpoint Test Cases (T-040)
+
+| Test ID | Level | Verifies | For task | Preconditions | Steps | Expected result |
+|---------|-------|---------|----------|---------------|-------|------------------|
+| TC-VER-001 | Integration | `GET /version` returns 200 with correct body | T-040 | Fastify app started via `buildApp()` | `app.inject({ method: 'GET', url: '/version' })` | Status 200; body `{ name: 'greeting-service', version: <matches package.json>, gitUrl: 'https://github.com/ika100/e2e-greeting-service' }` |
+| TC-VER-002 | Integration | `version` field matches `package.json` | T-040 | Same as above | Compare `response.body.version` with `JSON.parse(readFileSync('package.json')).version` | Values are equal |
+| TC-VER-003 | Integration | `GET /version` is accessible without auth | T-040 | App started, no auth headers | `GET /version` with no headers | Status 200 (not 401/403) |
+
+---
 
 ### Coverage checklist
 
@@ -118,3 +129,4 @@
 - [x] Security test cases TC-SEC-001 through TC-SEC-004 are present (required standard set).
 - [x] Container-specific security test TC-SEC-004, TC-SEC-005 included (microservice type).
 - [x] Performance test included (TC-016).
+- [x] About feature version endpoint test cases TC-VER-001–TC-VER-003 added (T-040).
