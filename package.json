@@ -1,8 +1,8 @@
 {
   "name": "greeting-service",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
-  "description": "REST microservice \u2014 GET /greet?name=X returns a personalised greeting",
+  "description": "REST microservice — GET /greet?name=X returns a personalised greeting",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
