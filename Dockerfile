@@ -1,6 +1,8 @@
 # Stage 1: Install production dependencies
 FROM node:22-alpine AS deps
 WORKDIR /app
+# Upgrade npm to latest to eliminate npm-bundled CVEs (tar, brace-expansion, etc.)
+RUN npm install -g npm@latest
 COPY package*.json ./
 RUN npm ci --only=production
 
