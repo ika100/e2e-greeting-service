@@ -43,6 +43,7 @@ export function buildApp(opts = {}) {
   // Register routes
   app.register(import('./routes/health.js'));
   app.register(import('./routes/greet.js'));
+  app.register(import('./routes/version.js'));
 
   return app;
 }

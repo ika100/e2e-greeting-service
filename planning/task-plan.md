@@ -613,6 +613,84 @@ Run a full dependency audit on the finalised `package.json` and remediate any fi
 
 ---
 
+---
+
+## About Feature Tasks — Wave 3 [parallel] _(branch from main after Wave 2 merged)_
+
+---
+
+### T-040 — GET /version endpoint
+
+| Field | Value |
+|-------|-------|
+| **Implements** | openspec/specs/about/spec.md VER-001 |
+| **Depends on** | T-010, T-011 (app factory in place) |
+| **Milestone** | M3 |
+| **Estimate** | S (< 2 h) |
+
+**Description:**  
+Add a `GET /version` route to the greeting-service so the frontend About page can fetch
+live version info.
+
+Implementation steps:
+1. Create `src/routes/version.js` as a Fastify plugin.
+2. Read `version` from `package.json` at **module load time** (not per-request) using
+   `import { createRequire } from 'module'` or a top-level `fs.readFileSync` on startup.
+3. Hardcode `gitUrl` as `https://github.com/ika100/e2e-greeting-service`.
+4. Register the route in `src/app.js`.
+5. Add an integration test in `test/version.test.js`.
+
+**Route definition:**
+```javascript
+// src/routes/version.js
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(readFileSync(join(__dirname, '../../package.json'), 'utf8'));
+
+export default async function versionRoutes(app) {
+  app.get('/version', {
+    schema: {
+      response: {
+        200: {
+          type: 'object',
+          required: ['name', 'version', 'gitUrl'],
+          properties: {
+            name:    { type: 'string' },
+            version: { type: 'string' },
+            gitUrl:  { type: 'string' },
+          },
+        },
+      },
+    },
+  }, async (_req, _reply) => ({
+    name: 'greeting-service',
+    version: pkg.version,
+    gitUrl: 'https://github.com/ika100/e2e-greeting-service',
+  }));
+}
+```
+
+**Register in `src/app.js`:**
+```javascript
+app.register(import('./routes/version.js'));
+```
+
+**Acceptance criteria:**
+- `GET /version` returns `200 OK` with `Content-Type: application/json`
+- Response body has `name: "greeting-service"`, `version` matching `package.json`, and
+  `gitUrl: "https://github.com/ika100/e2e-greeting-service"`
+- `version` is not hardcoded — changing `package.json` version reflects in the response
+- Endpoint is accessible without authentication
+- `devbox run test` passes with new test file `test/version.test.js`
+- `devbox run lint` exits 0
+
+**Tests:** TC-VER-001, TC-VER-002, TC-VER-003
+
+---
+
 ## Release Tasks (serial — after all waves merged)
 
 ### T-REL-002 — First versioned release (v0.1.0)
