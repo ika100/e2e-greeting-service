@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-07-28
+
 ## [0.0.1] - 2026-07-28
 
 ### Maintenance
@@ -45,3 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/ika100/e2e-greeting-service/compare/v0.0.1...HEAD
 [0.0.1]: https://github.com/ika100/e2e-greeting-service/releases/tag/v0.0.1
+
+[Unreleased]: https://github.com/ika100/e2e-greeting-service/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/ika100/e2e-greeting-service/compare/v0.0.1...v0.0.2

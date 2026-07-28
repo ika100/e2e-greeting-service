@@ -1,6 +1,6 @@
 {
   "name": "greeting-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "REST microservice — GET /greet?name=X returns a personalised greeting",
   "main": "src/server.js",
