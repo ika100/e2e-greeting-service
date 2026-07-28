@@ -1,0 +1,25 @@
+{
+  "name": "greeting-service",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "REST microservice — GET /greet?name=X returns a personalised greeting",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "lint": "eslint . --max-warnings=0",
+    "lint-fix": "eslint . --fix"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "supertest": "^7.0.0"
+  },
+  "license": "MIT"
+}
