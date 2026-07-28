@@ -35,7 +35,10 @@ const schema = {
 };
 
 export default async function versionRoutes(app) {
-  app.get('/version', { schema }, async (_request, _reply) => {
-    return versionInfo;
-  });
+  // /version — direct access (tests, internal, external deployments)
+  // /greet/version — alias for Ingress path-based routing in local k3d
+  //   (Ingress routes /greet* to greeting-service; frontend calls /greet/version)
+  for (const path of ['/version', '/greet/version']) {
+    app.get(path, { schema }, async (_request, _reply) => versionInfo);
+  }
 }
